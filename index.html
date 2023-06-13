@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vue Livecoding</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+        <link rel="stylesheet" href="./styles/style.css">
+    </head>
+    <body>
+        <!-- Vue 3 -->
+        <script src="https://unpkg.com/vue@3"></script>
+
+        <div id="app">
+            <div class="user-bar">
+                <div class="current-user">
+                    <div class="my-user">
+                        <img src="./img/avatar_io.jpg" alt="My avatar">
+                        <span>
+                            Ginetta
+                        </span>
+                    </div>
+                    <div class="user-settings">
+                        <i class="fa-solid fa-circle-notch"></i>
+                        <i class="fa-solid fa-message"></i>
+                        <i class="fa-solid fa-ellipsis-v"></i>
+                    </div>
+                </div>
+                <div class="notifications">
+                    <div class="notification-bell">
+                        <i class="fa fa-solid fa-bell-slash"></i>
+                    </div>
+                    <div>
+                        <p>Ricevi notifiche ecc ecc</p>
+                        <span class="subtitle">
+                            Attiva notifiche cia cia cia
+                        </span>
+                    </div>
+                </div>
+                <div class="search-bar">
+                    <label for="message-search">
+                        <i class="fa fa-solid fa-search"></i>
+                    </label>
+                    <input type="text" id="message-search" v-model="contactSearchInput">
+                </div>
+                <div class="contacts-list">
+                    <article class="contact" v-for="(contact, index) in searchedList"
+                    @click="selectContact(index)" :class="(index === activeContactIndex) ? 'active' :''">
+                        <div class="contact-avatar">
+                            <img :src="contact.avatar" :alt="contact.name + 'avatar'" class="avatar">
+                        </div>
+                        <div class="contact-info">
+                            <h3>
+                                {{ contact.name }}
+                            </h3>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="conversation">
+                <div class="message-recipient">
+                    <div class="recipient-user">
+                        <img :src="searchedList[activeContactIndex].avatar" :alt="searchedList[activeContactIndex].name+ '\'s avatar'">
+                        <div>
+                            <p>
+                                {{ searchedList[activeContactIndex].name  }}
+                            </p>
+                            <span class="subtitle">
+                                Ultimo messaggio ricevuto
+                            </span>
+                        </div>
+                    </div>
+                    <div class="recipient">
+                        <i class="fa-solid fa-search"></i>
+                        <i class="fa-solid fa-paperclip"></i>
+                        <i class="fa-solid fa-ellipsis-v"></i>
+                    </div>
+                </div>
+                <div class="messages clearfix">
+                    <div v-for="messageObj in searchedList[activeContactIndex].messages " class="message" :class="(messageObj.status === 'sent') ? 'message-sent' : 'message-received'">
+                        {{ messageObj.message }}
+                    </div>
+                </div>
+                <div class="message-input">
+                    <label for="message-search">
+                        <i class="fa-regular fa-face-smile"></i>
+                    </label>
+                    <input type="text" id="message-search" placeholder="Scrivi un messaggio" v-model="messageInput" @keyup.enter="newUserMessage(activeContactIndex, messageInput)">
+                    <label for="message-search">
+                        <i class="fa-solid fa-microphone"></i>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/script.js"></script>
+    </body>
+</html>
