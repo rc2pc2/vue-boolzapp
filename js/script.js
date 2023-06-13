@@ -184,7 +184,6 @@ createApp({
             this.activeContactIndex = index;
         },
 
-
         newUserMessage(index, message){
             if (message === ''){
                 return false;
